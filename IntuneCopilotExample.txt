@@ -1,0 +1,275 @@
+openapi: 3.0.0
+
+info:
+  title: Entra List Risk
+  description: Entra REST API for Listing Risk
+  version: 1.0.0
+
+servers:
+   - url: https://graph.microsoft.com/v1.0
+   - description: Main (production) server for Microsoft Graph API
+  
+paths:
+  /identityProtection/riskDetections:
+    get:
+      summary: Retrieve a list of riskDetections
+      operationId: getRiskDetections
+      tags:
+        - Identity Protection
+      responses:
+        '200':
+          description: Successfully retrieved a list of riskDetections
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskDetections'
+        '400':
+          description: Bad request, often due to missing a required parameter
+        '401':
+          description: No valid authentication credentials for the target resource
+        '403':
+          description: The server understood the request but refuses to authorize it
+        '404':
+          description: The requested resource does not exist
+        '500':
+          description: A generic error occurred on the server
+
+  /identityProtection/riskDetections/{id}:
+    get:
+      summary: Retrieve a specific riskDetection by ID
+      operationId: getRiskDetectionById
+      tags:
+        - Identity Protection
+      parameters:
+        - name: id
+          in: path
+          description: ID of the riskDetection to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved the riskDetection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskDetection'
+        '400':
+          description: Bad request, often due to missing a required parameter
+        '401':
+          description: No valid authentication credentials for the target resource
+        '403':
+          description: The server understood the request but refuses to authorize it
+        '404':
+          description: The requested resource does not exist
+        '500':
+          description: A generic error occurred on the server
+
+  /identityProtection/riskDetections/{id}/history:
+    get:
+      summary: Retrieve the history of a specific riskDetection
+      operationId: getRiskDetectionHistory
+      tags:
+        - Identity Protection
+      parameters:
+        - name: id
+          in: path
+          description: ID of the riskDetection to retrieve the history for
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved the history of the riskDetection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskDetectionHistory'
+        '400':
+          description: Bad request, often due to missing a required parameter
+        '401':
+          description: No valid authentication credentials for the target resource
+        '403':
+          description: The server understood the request but refuses to authorize it
+        '404':
+          description: The requested resource does not exist
+        '500':
+          description: A generic error occurred on the server
+
+  /identityProtection/riskyUsers:
+    get:
+      summary: Retrieve a list of riskyUsers
+      operationId: getRiskyUsers
+      tags:
+        - Identity Protection
+      responses:
+        '200':
+          description: Successfully retrieved a list of riskyUsers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskyUsers'
+        '400':
+          description: Bad request, often due to missing a required parameter
+        '401':
+          description: No valid authentication credentials for the target resource
+        '403':
+          description: The server understood the request but refuses to authorize it
+        '404':
+          description: The requested resource does not exist
+        '500':
+          description: A generic error occurred on the server
+
+  /identityProtection/servicePrincipalRiskDetections:
+    get:
+      summary: Retrieve a list of servicePrincipalRiskDetections
+      operationId: getServicePrincipalRiskDetections
+      tags:
+        - Identity Protection
+      responses:
+        '200':
+          description: Successfully retrieved a list of servicePrincipalRiskDetections
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServicePrincipalRiskDetections'
+        '400':
+          description: Bad request, often due to missing a required parameter
+        '401':
+          description: No valid authentication credentials for the target resource
+        '403':
+          description: The server understood the request but refuses to authorize it
+        '404':
+          description: The requested resource does not exist
+        '500':
+          description: A generic error occurred on the server
+
+  /identityProtection/riskyServicePrincipals:
+    get:
+      summary: Retrieve a list of riskyServicePrincipals
+      operationId: getRiskyServicePrincipals
+      tags:
+        - Identity Protection
+      responses:
+        '200':
+          description: Successfully retrieved a list of riskyServicePrincipals
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskyServicePrincipals'
+        '400':
+          description: Bad request, often due to missing a required parameter
+        '401':
+          description: No valid authentication credentials for the target resource
+        '403':
+          description: The server understood the request but refuses to authorize it
+        '404':
+          description: The requested resource does not exist
+        '500':
+          description: A generic error occurred on the server
+
+components:
+  schemas:
+    RiskDetections:
+      type: object
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskDetection'
+    RiskDetection:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the risk detection
+        riskType:
+          type: string
+          description: Type of risk detection reported
+        riskState:
+          type: string
+          description: State of the risk detection
+        riskDetail:
+          type: string
+          description: Details of the risk detection
+        source:
+          type: string
+          description: Source of the risk detection
+        detectedDateTime:
+          type: string
+          format: date-time
+          description: The date and time when the risk was detected
+    RiskDetectionHistory:
+      type: object
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskDetection'
+    RiskyUsers:
+      type: object
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskyUser'
+    RiskyUser:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the risky user
+        displayName:
+          type: string
+          description: Display name of the risky user
+        riskLevel:
+          type: string
+          description: Risk level associated with the risky user
+    ServicePrincipalRiskDetections:
+      type: object
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServicePrincipalRiskDetection'
+    ServicePrincipalRiskDetection:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the service principal risk detection
+        riskType:
+          type: string
+          description: Type of risk detection reported for the service principal
+        riskState:
+          type: string
+          description: State of the risk detection for the service principal
+        riskDetail:
+          type: string
+          description: Details of the risk detection for the service principal
+        source:
+          type: string
+          description: Source of the risk detection for the service principal
+        detectedDateTime:
+          type: string
+          format: date-time
+          description: The date and time when the risk was detected for the service principal
+    RiskyServicePrincipals:
+      type: object
+      properties:
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskyServicePrincipal'
+    RiskyServicePrincipal:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the risky service principal
+        displayName:
+          type: string
+          description: Display name of the risky service principal
+        riskLevel:
+          type: string
+          description: Risk level associated with the risky service principal
